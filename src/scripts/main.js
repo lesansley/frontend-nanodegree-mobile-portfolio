@@ -527,7 +527,12 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  var rows = Math.ceil(screen.height/s);
+  var count = cols * rows
+  console.log(screen.height);
+
+  //THE NUMBER OF SLIDING PIZZAS GENERATED IS DEPENDENT ON SCREEN RESOLUTION
+  for (var i = 0; i < count; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "img/pizza.png";
