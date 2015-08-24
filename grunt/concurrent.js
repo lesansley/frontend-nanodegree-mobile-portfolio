@@ -8,23 +8,27 @@ module.exports = {
     // Dev tasks
     devFirst: [
         'clean',
-        'jshint'
+        'jshint',
+        'htmlmin'
     ],
     devSecond: [
-        'sass:dev',
-        'uglify'
+        'uglify',
+        'cssmin'
     ],
 
     // Production tasks
     prodFirst: [
         'clean',
-        'jshint'
+        'jshint',
+        'htmlmin'
     ],
     prodSecond: [
-        'sass:prod',
-        'uglify'
+        'uglify',
+        'cssmin'
     ],
-
+    prodThird: [
+        'inline'
+    ],
     // Image tasks
     imgFirst: [
         'imagemin'
