@@ -40,7 +40,7 @@ form {
   position: fixed;
   width: 256px;
   z-index: -1;
-  
+
 }
 
 .randomPizzaContainer {
@@ -48,8 +48,12 @@ form {
   display: flex;
 }
 
+.pizza-images {
+  text-align:  -webkit-center;
+}
+
 #pizzaGenerator {
-  
+  will-change: transform;
 }
 
 .randomPizzaContainer:after {
@@ -65,9 +69,10 @@ form {
   padding-right: 15px;
   margin-right: auto;
   margin-left: auto;
+  min-width: 706px;
 }
 
 .random-pizza-image {
-  width: 100%;
+  width: 77px;
 }
 
