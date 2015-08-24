@@ -56,7 +56,7 @@ Similar to the scrolling one of the main issues with chaging pizza sizes was the
 in the CSS file.
 All these improvements result in a pizza resize time of 0.67 ms.
 ### Additional changes
-Finally, as a perfromance improvement I changed the way in which the pizza menu was generated. Instead of adding a DOM element after each pizza is created, the entire menu list is now created and then added in one single block into the DOM. This has resukted in improved page loading.
+Finally, as a perfromance improvement I changed the way in which the pizza menu was generated. Instead of adding a DOM element after each pizza is created, the entire menu list is now created and then added in one single block into the DOM. This has resulted in improved page loading.
 
 
 
