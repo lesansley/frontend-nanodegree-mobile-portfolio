@@ -498,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
   var rows = Math.ceil(screen.height/s);
-  var count = cols * rows
+  var count = cols * rows;
 
   //THE NUMBER OF SLIDING PIZZAS GENERATED IS DEPENDENT ON SCREEN RESOLUTION
   for (var i = 0; i < count; i++) {
