@@ -358,21 +358,24 @@ var makeRandomPizza = function() {
   return pizza;
 };
 
-// creates a complete DOM for the pizza menu
+//creates a complete DOM structure for the pizza menu
 var pizzaElementGenerator = function(start, end) {
   window.performance.mark("mark_start_generating");
+  //defines the DOM template for each pizza
   var HTMLpizzaContainer = '<div id="pizza%data%" class="randomPizzaContainer" style="height: 325px; width: 33.33%;"><div class="pizza-images col-md-6"><img src="img/pizza.png" class="img-responsive random-pizza-image"  style="width: 66%"></div><div class="col-md-6"><h4>%randomName%</h4><ul>%makeRandomPizza%</ul></div></div>';
   var allPizzaElements = '';
 
-  //build the menu using the DOM skeleton above
+  //loop that creates the required number of pizzas
+  //using the DOM template
   for(var i=start; i < end; i++) {
     var pizzaElement = HTMLpizzaContainer.replace('%data%',i);
     pizzaElement = pizzaElement.replace('%randomName%', randomName());
     pizzaElement = pizzaElement.replace('%makeRandomPizza%', makeRandomPizza());
+    //build the menu by appending to allPizzaElements
     allPizzaElements += pizzaElement;
   }
 
-  //add the menu to the DOM tree
+  //add the completesd menu to the DOM tree
   var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.insertAdjacentHTML('beforeend', allPizzaElements);
 
@@ -380,30 +383,36 @@ var pizzaElementGenerator = function(start, end) {
   window.performance.measure("measure_pizza_generation", "mark_start_generating", "mark_end_generating");
   var timeToGenerate = window.performance.getEntriesByName("measure_pizza_generation");
   console.log("Time to generate pizzas on load: " + timeToGenerate[0].duration + "ms");
+  // collect timing data
+  // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
 };
-//Create the random pizzas from 3 to 100
-pizzaElementGenerator(2,100);
+pizzaElementGenerator(2,100); //Create the 98 random pizzas
 
 var resizePizzas = function(size) {
   window.performance.mark("mark_start_resize");   // User Timing API function
-  var pizzaSizeDiv = document.querySelector("#pizzaSize");
-  var oldSize = pizzaSizeDiv;
+
+
 
   // Changes the value for the size of the pizza above the slider
   function changeSliderLabel(size) {
+    var pizzaSizeDiv = document.querySelector("#pizzaSize");
+    var pizzaSize;
     switch(size) {
       case "1":
-        pizzaSizeDiv = "Small";
-        return;
+        pizzaSize = "Small";
+        break;
       case "2":
-        pizzaSizeDiv = "Medium";
-        return;
+        pizzaSize = "Medium";
+        break;
       case "3":
-        pizzaSizeDiv = "Large";
-        return;
+        pizzaSize = "Large";
+        break;
       default:
         console.log("bug in changeSliderLabel");
+        break;
     }
+    //Update the slider size label
+    pizzaSizeDiv.innerHTML = pizzaSize;
   }
   changeSliderLabel(size);
 
@@ -412,6 +421,7 @@ var resizePizzas = function(size) {
     var allPizzaImages = document.querySelectorAll('.random-pizza-image');
     var newPizzaSize;
 
+    //set the percentage width for the images based on size of pizza selected
     switch(size) {
       case "1":
         newPizzaSize = "50%";
@@ -423,12 +433,12 @@ var resizePizzas = function(size) {
         newPizzaSize = "100%";
         break;
       default:
-        console.log("bug in changeSliderLabel");
+        console.log("bug in changePizzaSizes");
         break;
     }
-
+    //Minimise DOM intergation by assigning array length to a variable
     var images = allPizzaImages.length;
-
+    //loop through all pizza images and adjust their width in relation to the size of their div container
     for(var i=0; i < images; i++) {
       allPizzaImages[i].style.width = newPizzaSize;
     }
@@ -442,10 +452,6 @@ var resizePizzas = function(size) {
   var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
   console.log("Time to resize pizzas: " + timeToResize[0].duration + "ms");
 };
-
- // collect timing data
-// User Timing API again. These measurements tell you how long it took to generate the initial pizzas
-
 
 // Iterator for number of times the pizzas in the background have scrolled.
 // Used by updatePositions() to decide when to log the average time per frame
@@ -469,14 +475,17 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
+  //assign all moving pizza images to an array
   //move the DOM lookup outside of the loop
   var items = document.querySelectorAll('.mover');
+  //capture the number of pixels scrolled and multiply by a constant
   var scrollRatio = document.body.scrollTop/1250;
-  //assign the length of item array to a variable stop requiring lookups
+  //assign the length of item array to a variable minimise DOM lookups
   var count = items.length;
 
   for (var i = 0; i < count; i++) {
     var phase = Math.sin(scrollRatio + (i % 5));
+    //update the basicLeft property of the moving images
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -497,6 +506,7 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
+  //determine the number of moving images required according to screen resolution
   var rows = Math.ceil(screen.height/s);
   var count = cols * rows;
 
